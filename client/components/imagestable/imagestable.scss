@@ -1,0 +1,13 @@
+.imagestable tr{
+  cursor: pointer;
+  opacity: .8;
+}
+
+.imagestable tr:hover{
+  background : rgba(0,0,0,.1);
+  opacity : 1;
+}
+
+.imagestable table.md-table td.md-cell{
+  color: inherit;
+}

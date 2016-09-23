@@ -1,0 +1,73 @@
+<div
+  flex="{{ !imageCtrl.display.drawerOut ? 'grow': '1'}}"
+  layout="row"
+>
+  <div
+    layout="column"
+    class="tips"
+  >
+    <h2>Vous éditez: </h2>
+    <p ng-repeat="val in imageCtrl.imageDisplayVals">
+        {{key}}
+      <span class="key" ng-bind="val.key"></span> :
+      <span class="value" ng-bind="val.value"></span>
+    </p>
+    <!-- <md-button ng-disabled="true">Image précédente</md-button> -->
+  </div>
+
+  <div
+    layout="row"
+    layout-align="center"
+    flex="grow"
+  >
+    <img
+    selectable
+    frames="imageCtrl.frames"
+    add-frame="imageCtrl.addFrame(frame)"
+    delete-frame="imageCtrl.deleteFrame(frame)"
+    src="{{imageCtrl.image.imageUrl}}" alt="" />
+  </div>
+
+  <div
+    layout="column"
+    layout-align="center"
+  >
+    <md-button
+      ng-show="imageCtrl.nextImageId"
+    ><a ng-href="/image/{{imageCtrl.nextImageId}}">Image suivante</a></md-button>
+  </div>
+</div>
+
+<div
+  flex="{{ imageCtrl.display.drawerOut ? 'grow': '1'}}"
+  layout="row"
+  style="background: darkgrey"
+>
+
+  <ul
+    flex="grow"
+    ui-sortable="imageCtrl.sortableOptions"
+    ng-model="imageCtrl.frames"
+    style="padding: 1rem"
+  >
+    <li
+      class="frame-dnd"
+      ng-repeat="frame in imageCtrl.frames track by $index"
+      ng-style="{'background': frame.color}"
+      layout="column"
+      layout-align="center"
+    ><span class="frame-rank">{{(frame.rank+1)}}</span></li>
+  </ul>
+
+  <div class="tips">
+    {{
+      (!imageCtrl || imageCtrl.frames === undefined || !imageCtrl.frames.length) ?
+    "Dessiner des rectangles dans l'image pour effectuer des sélections"
+    : "Faire glisser horizontalement les cadres pour en définir l'ordre "
+    }}
+  </div>
+
+ <!-- <div>
+    <md-button ng-click="imageCtrl.toggleDrawer()">{{ imageCtrl.display.drawerOut ? 'Rétrécir':'Agrandir'}}</md-button>
+  </div>-->
+</div>
