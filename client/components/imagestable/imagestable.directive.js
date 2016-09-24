@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('cadrageApp')
-  .directive('imagestable', function ($location, $rootScope) {
+  .directive('imagestable', function ($location) {
     return {
       templateUrl: 'components/imagestable/imagestable.html',
       restrict: 'EA',
       scope: {
         images: '='
       },
-      link: function (scope, element, attrs) {
+      link: function (scope) {
         scope.query = {
           order: 'fileName',
           limit: 5,
@@ -22,7 +22,8 @@ angular.module('cadrageApp')
                   return -1;
                 }
                 return b[prop] > a[prop];
-        }
+        };
+
         scope.reorderImages = (inputOrder) =>{
           const reverse = inputOrder.indexOf('-') === 0;
           const order = inputOrder.indexOf('-') === 0 ? inputOrder.substr(1) : inputOrder;
@@ -39,16 +40,14 @@ angular.module('cadrageApp')
                 return compareProp('typeArticle', a, b);
               case 'frames':
                 return a.frames.length > b.frames.length;
-                break;
               default:
                 return 1;
-                break;
             }
           });
           if (reverse) {
             scope.imagesDisplay.reverse();
           }
-        }
+        };
 
         scope.$watch('images', function(images) {
           if (images !== undefined) {
@@ -60,7 +59,7 @@ angular.module('cadrageApp')
 
         scope.goToImage = (id) => {
           $location.path('/image/' + id);
-        }
+        };
       }
     };
   });

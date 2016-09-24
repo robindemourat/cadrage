@@ -18,12 +18,11 @@ angular.module('cadrageApp')
         addFrame: '&',
         deleteFrame: '&'
       },
-      link: function (scope, element, attrs) {
+      link: function (scope, element) {
 
         let frames = [];
         const parent = element.parent();
         let tempRect;
-        let draggedRect;
         let tempRectPos;
         let position;
         let clicking = false;
@@ -139,7 +138,7 @@ angular.module('cadrageApp')
                 color: getRandomColor()
               };
               scope.addFrame({frame: newFrame});
-              const frameElement = addFrame(newFrame);
+              addFrame(newFrame);
               frames.push(newFrame);
             }
           }
@@ -164,10 +163,10 @@ angular.module('cadrageApp')
                 };
               }
               frames = topFrames.slice();
-              topFrames.forEach((input, inputIndex) => {
-                const frameElement = addFrame(input);
-              });
-            } else updatePending = true;
+              topFrames.forEach(addFrame);
+            } else {
+              updatePending = true;
+            }
           }
         };
 
@@ -179,7 +178,7 @@ angular.module('cadrageApp')
           return {
             width: element.width(),
             height: element.height()
-          }
+          };
         }, onResize, true);
 
         angular.element(window).on('resize', onResize);

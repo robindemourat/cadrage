@@ -19,10 +19,18 @@ class NavbarController {
   sanitizePosition() {
     var current = this.toastPosition;
 
-    if ( current.bottom && this.last.top ) current.top = false;
-    if ( current.top && this.last.bottom ) current.bottom = false;
-    if ( current.right && this.last.left ) current.left = false;
-    if ( current.left && this.last.right ) current.right = false;
+    if ( current.bottom && this.last.top ) {
+      current.top = false;
+    }
+    if ( current.top && this.last.bottom ) {
+      current.bottom = false;
+    }
+    if ( current.right && this.last.left ) {
+      current.left = false;
+    }
+    if ( current.left && this.last.right ) {
+      current.right = false;
+    }
 
     this.last = angular.extend({}, current);
   }
@@ -60,9 +68,13 @@ class NavbarController {
                      target: '_blank',
                      download: 'donnees_images_cadres.csv'
               })[0].click();
-          } else this.displayToast('Échec lors de la préparation des données ...');
-        })
-    } else this.displayToast('Déjà en train de préparer le téléchargement, patience !');
+          } else {
+            this.displayToast('Échec lors de la préparation des données ...');
+          }
+        });
+    } else {
+      this.displayToast('Déjà en train de préparer le téléchargement, patience !');
+    }
   }
 
   syncImages() {
@@ -78,10 +90,12 @@ class NavbarController {
           this.displayToast('Synchronisation réussie !');
           this.$rootScope.$broadcast('dataUpdate');
         } else {
-          this.displayToast('Synchronisation échouée ...')
+          this.displayToast('Synchronisation échouée ...');
         }
       });
-    } else this.displayToast('Déjà en train de synchroniser, patience !');
+    } else {
+      this.displayToast('Déjà en train de synchroniser, patience !');
+    }
 
   }
 }

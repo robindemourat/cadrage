@@ -11,7 +11,7 @@
 
       $scope.$on('dataUpdate', ()=>{
         this.$onInit();
-      })
+      });
     }
 
     $onInit() {

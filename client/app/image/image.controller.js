@@ -15,7 +15,7 @@ class ImageComponent {
     this.sortableOptions = {
       'ui-floating': true,
       axis: 'x',
-      stop: (e, ui) => {
+      stop: () => {
         const newFrames = this.frames.map((frame, i) => {
           return Object.assign({}, frame, {rank: i});
         });
@@ -78,7 +78,7 @@ class ImageComponent {
             if (response.status === 200) {
               this.nextImageId = response.data;
             }
-          })
+          });
       });
   }
 
@@ -98,8 +98,10 @@ class ImageComponent {
         if (response.status === 201) {
           this.frames = response.data.sort((frameA, frameB) => frameB.rank < frameA.rank);
           this.updateImageFrames();
-        } else console.log('error: ', response);
-      })
+        } else {
+          console.log('error: ', response);
+        }
+      });
   }
 
   deleteFrame (frame) {
@@ -109,8 +111,10 @@ class ImageComponent {
         if (response.status === 200) {
           this.frames = response.data.sort((frameA, frameB) => frameB.rank < frameA.rank);
           this.updateImageFrames();
-        } else console.log('error: ', response);
-      })
+        } else {
+          console.log('error: ', response);
+        }
+      });
   }
 
   toggleDrawer () {
