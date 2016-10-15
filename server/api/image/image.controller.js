@@ -11,7 +11,8 @@
 import csv from 'express-csv';
 import _ from 'lodash';
 import Image from './image.model';
-
+import Frame from '../frame/frame.model';
+import { map as asyncMap } from 'async';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -60,20 +61,38 @@ function handleError(res, statusCode) {
   };
 }
 
+const acceptedCsvKeys = ['frames', 'imageUrl', 'fileName']
+
 // Gets a list of Images
 export function index(req, res) {
   if (req.query.csv !== undefined) {
     Image.find().exec()
-    .then((entities)=>{
-      const keys = Object.keys(entities[0]._doc);
-      const table = [keys].concat(
-        entities.map(entity =>
-          keys.map(key => entity._doc[key]
+    .then((entitiesInput)=>{
+
+      asyncMap(entitiesInput, (entity, entityCb) => {
+
+        Frame.find({
+          _id: { $in: entity._doc.frames}
+        })
+        .then((matchingFrames) => {
+          let serializedFrames = matchingFrames.map((frame) => {
+            return 'x:' + frame.x + ',y:' + frame.y + ',w:' + frame.w + ',h:' + frame.h;
+          }).join('|')
+          entityCb(null, Object.assign({}, entity._doc, {frames: serializedFrames}));
+        })
+      }, (err, entities) => {
+        const keys = Object.keys(entities[0]).filter((key) => {
+          return acceptedCsvKeys.indexOf(key) > -1;
+        });
+        const table = [keys].concat(
+          entities.map(entity =>
+            keys.map(key => entity[key]
+          )
         )
-      )
-      );
-      console.log('rendering to csv');
-      res.csv(table);
+        );
+        console.log('rendering to csv');
+        res.csv(table);
+      });
     })
     .catch(handleError(res));
   } else return Image.find().exec()
