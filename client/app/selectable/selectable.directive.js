@@ -191,6 +191,8 @@ angular.module('cadrageApp')
           if (updatePending) {
             onFrameUpdate(scope.frames);
           }
+          console.log('image ready');
+          setTimeout(onResize, 500);
         });
 
         scope.$watch('frames', onFrameUpdate);
