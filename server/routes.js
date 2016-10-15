@@ -13,7 +13,6 @@ export default function(app) {
   app.use('/api/images', require('./api/image'));
   app.use('/api/imageoperations', require('./api/imageoperations'));
   app.use('/api/nextimage', require('./api/nextimage'));
-  app.use('/api/things', require('./api/thing'));
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')
    .get(errors[404]);
