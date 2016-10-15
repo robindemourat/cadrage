@@ -17,11 +17,11 @@ angular.module('cadrageApp')
 
         const compareProp = (prop, a, b)=>{
           if (a[prop] === undefined) {
-                  return 1;
-                } else if (b[prop] === undefined) {
-                  return -1;
-                }
-                return b[prop] > a[prop];
+            return 1;
+          } else if (b[prop] === undefined) {
+            return -1;
+          }
+          return b[prop] > a[prop];
         };
 
         scope.reorderImages = (inputOrder) =>{
@@ -48,6 +48,17 @@ angular.module('cadrageApp')
             scope.imagesDisplay.reverse();
           }
         };
+
+        scope.filter = {
+          search: ''
+        };
+
+        scope.query = {
+          limit: 5,
+          page: 1,
+          order: 'Fichier'
+        };
+        scope.limitOptions = [5, 10, 15, 20, 50, 100, 500];
 
         scope.$watch('images', function(images) {
           if (images !== undefined) {

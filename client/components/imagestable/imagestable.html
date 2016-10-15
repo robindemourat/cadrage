@@ -1,32 +1,58 @@
+<md-toolbar class="md-table-toolbar md-default" ng-show="!options.rowSelection || !selected.length">
+  <div class="md-toolbar-tools" layout="row">
+    <md-button class="md-icon-button">
+      <md-icon>search</md-icon>
+    </md-button>
+    <md-input-container flex style="top: 1.5rem; font-size: .9rem">
+      <label>rechercher dans les images</label>
+      <input name="clientName" ng-model="filter.search">
+      </div>
+    </md-input-container>
+  </div>
+</md-toolbar>
+
+</md-toolbar>
+
 <md-table-container class="imagestable">
   <table md-table>
-    <thead md-head md-order="query.order" md-on-reorder="reorderImages">
+    <!-- <thead md-head md-order="query.order" md-on-reorder="reorderImages"> -->
+    <thead md-head md-order="query.order">
       <tr md-row>
-        <th md-column md-numeric md-order-by="Fichier"><span>Fichier</span></th>
-        <th md-column md-numeric md-order-by="Atelier"><span>Atelier</span></th>
-        <th md-column md-numeric md-order-by="Telerama"><span>Télérama</span></th>
+        <th md-column md-numeric md-order-by="frames">Nb Cadres définis pour l'image</th>
+        <th md-column md-order-by="fileName"><span>Nom du fichier</span></th>
+        <th md-column md-order-by="numeroAtelier"><span>Atelier</span></th>
+        <th md-column md-order-by="numeroTelerama"><span>Télérama</span></th>
         <th md-column md-numeric><span>n°</span></th>
-        <th md-column md-numeric md-order-by="Type"><span>Type</span></th>
-        <th md-column md-numeric md-order-by="frames">Nb Cadres</th>
+        <th md-column md-order-by="typeArticle"><span>Type</span></th>
       </tr>
     </thead>
     <tbody md-body>
       <tr
       ng-click="goToImage(image._id)"
       md-row
-      ng-repeat="image in imagesDisplay"
+      ng-repeat="image in imagesDisplay | filter: filter.search | orderBy: query.order | limitTo: query.limit : (query.page - 1) * query.limit"
       ng-style="{
-        'background': image.numeroAtelier === undefined ? '#C11432': image.frames.length > 0 ? '#66A64F' : '#009ADA',
+        'background': image.numeroAtelier === undefined ? '#C65840': image.frames.length > 0 ? '#66A64F' : '#69B7CE',
         'color': image.numeroAtelier === undefined ? 'white' : 'inherit'
       }"
       >
+        <td class="number-cell" md-cell>{{image.frames.length}}</td>
         <td md-cell>{{image.fileName}}</td>
-        <td md-cell>{{image.numeroAtelier}}</td>
-        <td md-cell>{{image.numeroTelerama}}</td>
-        <td md-cell>{{image.numeroScan}}</td>
-        <td md-cell>{{image.typeArticle}}</td>
-        <td md-cell>{{image.frames.length}}</td>
+        <td md-cell>{{image.numeroAtelier || '⚠'}}</td>
+        <td md-cell>{{image.numeroTelerama || '⚠'}}</td>
+        <td md-cell>{{image.numeroScan || '⚠'}}</td>
+        <td md-cell>{{image.typeArticle || '⚠'}}</td>
       </tr>
     </tbody>
   </table>
 </md-table-container>
+<data-md-table-pagination
+  md-limit="query.limit"
+  md-limit-options="limitOptions"
+  md-page="query.page"
+  md-total="{{imagesDisplay.length}}"
+  md-on-paginate="onPaginate"
+  md-page-select="true"
+  md-boundary-links="false"
+  md-label="{page: 'Page:', rowsPerPage: 'Images par page:', of: 'de'}"
+></data-md-table-pagination>

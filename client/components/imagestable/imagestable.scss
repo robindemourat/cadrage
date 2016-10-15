@@ -11,3 +11,13 @@
 .imagestable table.md-table td.md-cell{
   color: inherit;
 }
+
+.imagestable .number-cell span
+{
+  text-align : center;
+}
+
+data-md-table-pagination .label
+{
+  color: rgba(0, 0, 0, 0.54)!important;
+}

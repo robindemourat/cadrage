@@ -59,8 +59,8 @@ angular.module('cadrageApp')
             top: position.elementOffsetY + frame.y * position.elementHeight,
             width:  position.elementWidth * frame.w,
             height: position.elementHeight * frame.h,
-            background: !temp ? frame.color : 'transparent',
-            border: !temp ? 'none' : '.5rem solid ' + frame.color
+            background: temp !== undefined ? frame.color : 'transparent',
+            border: temp !== undefined ? 'none' : '.5rem solid ' + frame.color
           };
           frameElement.css(params);
           const id = frameId(frame);
@@ -115,6 +115,7 @@ angular.module('cadrageApp')
         const onMouseMove = (e) => {
           if (clicking) {
             position = updateMousePosition(e);
+
             if (position.x > tempRectPos.x &&
                 position.y > tempRectPos.y) {
               tempRect.css({

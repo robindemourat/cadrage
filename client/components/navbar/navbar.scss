@@ -1,4 +1,18 @@
 .navbar{
   padding: 0;
   margin: 0;
+  background: rgb(33,150,243);
+  color: white;
+}
+
+.navbar .navbar-brand
+{
+  color: white;
+  text-transform: uppercase;
+}
+
+.navbar .md-button
+{
+  padding-top: .8rem;
+  padding-bottom: .8rem;
 }
