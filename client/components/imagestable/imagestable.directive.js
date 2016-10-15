@@ -15,40 +15,6 @@ angular.module('cadrageApp')
           page: 1
         };
 
-        const compareProp = (prop, a, b)=>{
-          if (a[prop] === undefined) {
-            return 1;
-          } else if (b[prop] === undefined) {
-            return -1;
-          }
-          return b[prop] > a[prop];
-        };
-
-        scope.reorderImages = (inputOrder) =>{
-          const reverse = inputOrder.indexOf('-') === 0;
-          const order = inputOrder.indexOf('-') === 0 ? inputOrder.substr(1) : inputOrder;
-          console.log('order %s reverse %s', order, reverse);
-          scope.imagesDisplay = scope.imagesDisplay.sort((a, b)=>{
-            switch (order) {
-              case 'Fichier':
-                return b.fileName > a.fileName;
-              case 'Atelier':
-                return compareProp('numeroAtelier', a, b);
-              case 'Telerama':
-                return compareProp('numeroTelerama', a, b);
-              case 'Type':
-                return compareProp('typeArticle', a, b);
-              case 'frames':
-                return a.frames.length > b.frames.length;
-              default:
-                return 1;
-            }
-          });
-          if (reverse) {
-            scope.imagesDisplay.reverse();
-          }
-        };
-
         scope.filter = {
           search: ''
         };
@@ -56,7 +22,7 @@ angular.module('cadrageApp')
         scope.query = {
           limit: 5,
           page: 1,
-          order: 'Fichier'
+          order: 'fileName'
         };
         scope.limitOptions = [5, 10, 15, 20, 50, 100, 500];
 
@@ -69,7 +35,9 @@ angular.module('cadrageApp')
         });
 
         scope.goToImage = (id) => {
-          $location.path('/image/' + id);
+          const path = ('/image/' + id);
+          $location.path(path);
+          $location.search('order', scope.query.order);
         };
       }
     };

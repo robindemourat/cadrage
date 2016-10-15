@@ -182,6 +182,8 @@ angular.module('cadrageApp')
           };
         }, onResize, true);
 
+        onResize();
+
         angular.element(window).on('resize', onResize);
 
         element.bind('load', function() {

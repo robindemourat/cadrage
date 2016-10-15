@@ -4,9 +4,10 @@
 (function(){
 
 class ImageComponent {
-  constructor($http, $stateParams) {
+  constructor($http, $stateParams, $location, $document) {
     this.imageId = $stateParams.id;
     this.$http = $http;
+    this.$location = $location;
     this.nextImageId = '';
     this.display = {
       drawerOut: false
@@ -61,6 +62,7 @@ class ImageComponent {
     this.$http
       .get('/api/images/' + this.imageId)
       .then(response => {
+        this.order = this.$location.search().order || 'fileName';
         this.image = response.data;
         this.updateDisplayVal(this.image);
         this.$http
@@ -73,10 +75,11 @@ class ImageComponent {
             }
           });
         this.$http
-          .get('/api/nextimage/' + this.imageId)
+          .get('/api/nextimage/' + this.imageId + '?order=' + this.order)
           .then(response => {
             if (response.status === 200) {
-              this.nextImageId = response.data;
+              this.nextImageId = response.data.nextId;
+              this.previousImageId = response.data.previousId;
             }
           });
       });
