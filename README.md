@@ -1,6 +1,9 @@
-# cadrage
+Cadrage - an app for defining zones of interest in a series of pictures
+---
 
-This project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 3.7.6.
+This is a web app dedicated to a simple task : defining and ordering specific zones of interest inside a series of images.
+
+Stack --> mongodb + node + angular
 
 ## Getting Started
 
