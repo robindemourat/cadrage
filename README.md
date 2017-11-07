@@ -1,7 +1,9 @@
 Cadrage - an app for defining zones of interest in a series of pictures
 ---
 
-This is a web app dedicated to a simple task : defining and ordering specific zones of interest inside a series of images.
+![Screencast](https://github.com/robindemourat/cadrage/blob/master/screencast-cadrage.gif?raw=true)
+
+This is a web app dedicated to a simple task : defining and ordering specific zones of interest inside a series of images. Data concerning frames is stored in a mongodb, images on a s3 bucket.
 
 Stack --> mongodb + node + angular
 
@@ -26,10 +28,6 @@ Stack --> mongodb + node + angular
 
 4. Run `gulp serve` to start the development server. It should automatically open the client in your browser when ready.
 
-## Build & development
+### Note on S3
 
-Run `grunt build` for building and `grunt serve` for preview.
-
-## Testing
-
-Running `npm test` will run the unit tests with karma.
+Somehow frankfurt region should not be used for the s3 storing of the images.
