@@ -10,3 +10,4 @@ npm-debug.log
 coverage
 /server/config/secret.js
 db
+.DS_Store
