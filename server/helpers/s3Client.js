@@ -16,7 +16,9 @@ const client = s3.createClient({
     s3Options: {
       accessKeyId: s3AccessKeyId,
       secretAccessKey: s3SecretAccessKey,
-      region: s3ServerRegion
+      region: s3ServerRegion,
+
+      endpoint: "https://s3.amazonaws.com"
       // any other options are passed to new AWS.S3()
       // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property
     }

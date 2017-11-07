@@ -28,7 +28,11 @@ export function index(req, res) {
     if (images) {
       res.status(200).send(images);
     }
-  });
+  })
+  .on('error', e => {
+    console.log('error', e);
+    res.status(500).send({msg: 'problem', error: e})
+  })
 }
 
 // Updates mongo db with s3 stored images
@@ -40,8 +44,10 @@ export function update(req, res) {
   let err;
   console.log('listing files with params', params);
   // list objects
-  s3Client.listObjects(params)
+  s3Client
+  .listObjects(params)
   .on('data', (data)=>{
+    console.log('got data', data);
     if (data.Contents) {
       images = data.Contents.filter((object)=>{
         const key = object.Key;
@@ -49,7 +55,10 @@ export function update(req, res) {
       });
     }
   })
-  .on('error', (error) => err = error)
+  .on('error', (error) => {
+    console.log('error', error);
+    err = error;
+  })
   .on('end', () => {
     if (images) {
       console.log('got images, begining to update db');
