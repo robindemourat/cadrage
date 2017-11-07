@@ -29,17 +29,19 @@ angular.module('cadrageApp')
         let imageReady;
         let updatePending;
 
-        const updateMousePosition = (event) => ({
-          offsetX: event.offsetX,
-          offsetY: event.offsetY,
-          x: event.offsetX / element.width(),
-          y: event.offsetY / element.height(),
+        const updateMousePosition = (event) => {
+          return {
+            offsetX: event.offsetX,
+            offsetY: event.offsetY,
+            x: event.offsetX / element.width(),
+            y: event.offsetY / element.height(),
 
-          elementWidth: element.width(),
-          elementHeight: element.height(),
-          elementOffsetX: element.offset().left,
-          elementOffsetY: element.offset().top
-        });
+            elementWidth: element.width(),
+            elementHeight: element.height(),
+            elementOffsetX: element.offset().left,
+            elementOffsetY: element.offset().top
+          };
+        };
 
         const frameId = (arg) => {
           // frame to id
